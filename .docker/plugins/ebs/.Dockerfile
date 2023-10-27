@@ -1,7 +1,9 @@
 FROM python:3.11-slim
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt update
-RUN apt install xfsprogs e2fsprogs ca-certificates nvme-cli
+RUN apt install -y xfsprogs e2fsprogs ca-certificates nvme-cli
 RUN rm -rf /var/lib/apt/lists/*
 
 # RUN mkdir -p /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
