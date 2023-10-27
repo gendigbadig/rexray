@@ -5,7 +5,8 @@ on:
 
 jobs: 
   build:
-    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    runs-on: ubuntu-latest
+    # runs-on: buildjet-2vcpu-ubuntu-2204-arm
 
     steps:
       - uses: actions/checkout@v2
@@ -22,13 +23,13 @@ jobs:
         run: |
           pwd
           ls
-          go build -o rexray -x
+          GOOS=linux GOARCH=arm64 go build -o rexray -x
           cp ./rexray .docker/plugins/ebs/
           cd .docker/plugins/ebs/
-          docker build -t rootfsimage -f .Dockerfile .
-          id=$(docker create rootfsimage true)
+          docker build --platform linux/arm64 -t rootfsimage -f .Dockerfile .
+          id=$(docker create --platform linux/arm64 rootfsimage true)
           mkdir -p rootfs
-          docker export "$id" | sudo tar -x -C rootfs
+          docker export "$id" | tar -x -C rootfs
           docker rm -vf "$id"
           docker rmi rootfsimage
           docker plugin create gendigbadig/rexray-ebs-arm .
