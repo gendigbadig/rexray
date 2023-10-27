@@ -5,8 +5,8 @@ on:
 
 jobs: 
   build:
-    runs-on: ubuntu-latest
-    # runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    # runs-on: ubuntu-latest
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
 
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
         run: |
           pwd
           ls
-          GOOS=linux GOARCH=arm64 go build -o rexray -x
+          GOOS=linux GOARCH=arm64 go build -o rexray
           cp ./rexray .docker/plugins/ebs/
           cd .docker/plugins/ebs/
           docker build --platform linux/arm64 -t rootfsimage -f .Dockerfile .
