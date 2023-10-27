@@ -26,13 +26,11 @@ jobs:
           GOOS=linux GOARCH=arm64 go build -o rexray
           cp ./rexray .docker/plugins/ebs/
           cd .docker/plugins/ebs/
-          docker build --platform linux/arm64 -t rootfsimage -f .Dockerfile .
+          docker build --platform linux/arm64 -t rootfsimage -t gendigbadig/rexray-ebs-arm-img -f .Dockerfile .
           id=$(docker create --platform linux/arm64 rootfsimage true)
           mkdir -p rootfs
           docker export "$id" | tar -x -C rootfs
-          docker rm -vf "$id"
-          docker rmi rootfsimage
-          ls rootfs/usr/bin/
+          docker push gendigbadig/rexray-ebs-arm-img
           docker plugin create gendigbadig/rexray-ebs-arm .
           docker plugin push gendigbadig/rexray-ebs-arm
           # DRIVER=ebs make
