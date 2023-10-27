@@ -20,6 +20,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: build and push plugin
         run: |
-          DRIVER=ebs make
-          DRIVER=ebs make DOCKER_PLUGIN_NAME=gendigbadig/rexray-ebs build-docker-plugin
-          docker plugin push gendigbadig/rexray-ebs
+          pwd
+          ls
+          # DRIVER=ebs make
+          # DRIVER=ebs make DOCKER_PLUGIN_NAME=gendigbadig/rexray-ebs build-docker-plugin
+          # docker plugin push gendigbadig/rexray-ebs
