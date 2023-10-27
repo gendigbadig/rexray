@@ -25,7 +25,7 @@ jobs:
           go build -o rexray -x
           cp ./rexray .docker/plugins/ebs/
           cd .docker/plugins/ebs/
-          docker build -t rootfsimage .
+          docker build -t rootfsimage -f .Dockerfile .
           id=$(docker create rootfsimage true)
           mkdir -p rootfs
           docker export "$id" | sudo tar -x -C rootfs
