@@ -32,6 +32,7 @@ jobs:
           docker export "$id" | tar -x -C rootfs
           docker rm -vf "$id"
           docker rmi rootfsimage
+          ls rootfs/usr/bin/
           docker plugin create gendigbadig/rexray-ebs-arm .
           docker plugin push gendigbadig/rexray-ebs-arm
           # DRIVER=ebs make
